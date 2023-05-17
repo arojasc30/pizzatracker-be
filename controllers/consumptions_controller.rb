@@ -10,5 +10,20 @@ class ConsumptionsController < Grape::API
       pizza = Pizza[params[:pizza_id]]
       Consumption.create(person: person, pizza: pizza)
     end
+
+    desc 'Get all pizza consumptions'
+    get do
+      Consumption.all
+    end
+
+    desc 'Get streaks of increasing pizza consumption'
+    get 'streaks' do
+      Consumption.calculate_increasing_streaks
+    end
+
+    desc 'Get the day of the month with the most pizzas eaten'
+    get 'most_pizzas_day' do
+      Consumption.calculate_most_pizzas_day
+    end
   end
 end
