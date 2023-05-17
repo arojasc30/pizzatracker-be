@@ -8,3 +8,9 @@ gem 'grape-entity'
 gem 'rack'
 gem 'pg'
 gem 'puma'
+gem 'rack-cors'
+
+group :test do
+  gem 'rspec'
+  gem 'rack-test'
+end

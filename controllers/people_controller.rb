@@ -5,7 +5,6 @@ class PeopleController < Grape::API
     desc 'Return all people'
     get do
       people = Person.all
-      present people, with: PersonEntity
     end
 
     desc 'Return a person by ID'

@@ -2,9 +2,12 @@ require_relative 'entities'
 
 class PizzasController < Grape::API
   resource :pizzas do
-    desc 'Return all pizza consumptions'
-    get do
-      present Pizza.all, with: PizzaEntity
+    desc 'Return all pizza consumptions by person'
+    params do
+      requires :id, type: Integer, desc: 'Person ID'
+    end
+    get ':id' do
+      Pizza.where(person_id: params[:id])
     end
 
     desc 'Return a pizza consumption by ID'
