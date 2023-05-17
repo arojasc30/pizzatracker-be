@@ -7,10 +7,10 @@
    ```shell
    npm install
 
-2. Create Postgresql database
+2. Create Postgresql database:
 
-  ```shell
-  createdb pizza-api
+   ```shell
+   createdb pizza-api
 
 3. Run migrations:
 
