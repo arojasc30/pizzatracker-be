@@ -9,6 +9,7 @@ gem 'rack'
 gem 'pg'
 gem 'puma'
 gem 'rack-cors'
+gem 'csv'
 
 group :test do
   gem 'rspec'
