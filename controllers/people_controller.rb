@@ -1,8 +1,11 @@
+require_relative 'entities'
+
 class PeopleController < Grape::API
   resource :people do
     desc 'Return all people'
     get do
-      Person.all
+      people = Person.all
+      present people, with: PersonEntity
     end
 
     desc 'Return a person by ID'
@@ -11,7 +14,7 @@ class PeopleController < Grape::API
     end
     route_param :id do
       get do
-        Person[params[:id]]
+        present Person[params[:id]], with: PersonEntity
       end
     end
 
@@ -20,7 +23,7 @@ class PeopleController < Grape::API
       requires :name, type: String, desc: 'Person name'
     end
     post do
-      Person.create(name: params[:name])
+      present Person.create(name: params[:name]), with: PersonEntity
     end
 
     desc 'Update a person by ID'
@@ -31,7 +34,7 @@ class PeopleController < Grape::API
     put ':id' do
       person = Person[params[:id]]
       person.update(name: params[:name])
-      person
+      present person, with: PersonEntity
     end
 
     desc 'Delete a person by ID'

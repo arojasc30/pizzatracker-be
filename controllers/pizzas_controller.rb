@@ -1,26 +1,30 @@
+require_relative 'entities'
+
 class PizzasController < Grape::API
   resource :pizzas do
-    desc 'Return all pizzas'
+    desc 'Return all pizza consumptions'
     get do
-      Pizza.all
+      present Pizza.all, with: PizzaEntity
     end
 
-    desc 'Return a pizza by ID'
+    desc 'Return a pizza consumption by ID'
     params do
       requires :id, type: Integer, desc: 'Pizza ID'
     end
     route_param :id do
       get do
-        Pizza[params[:id]]
+        present Pizza[params[:id]], with: PizzaEntity
       end
     end
 
-    desc 'Create a new pizza'
+    desc 'Add a new pizza consumption'
     params do
       requires :topping, type: String, desc: 'Pizza topping'
+      requires :person_id, type: Integer, desc: 'Person ID'
     end
     post do
-      Pizza.create(topping: params[:topping])
+      pizza = Pizza.create(topping: params[:topping], date: DateTime.now, person_id: params[:person_id])
+      present pizza, with: PizzaEntity
     end
 
     desc 'Update a pizza by ID'
@@ -31,7 +35,7 @@ class PizzasController < Grape::API
     put ':id' do
       pizza = Pizza[params[:id]]
       pizza.update(topping: params[:topping])
-      pizza
+      present pizza, with: PizzaEntity
     end
 
     desc 'Delete a pizza by ID'
@@ -41,6 +45,14 @@ class PizzasController < Grape::API
     delete ':id' do
       pizza = Pizza[params[:id]]
       pizza.destroy
+    end
+
+    def consumption_streaks
+      Pizza.calculate_increasing_streaks
+    end
+
+    def most_pizzas_day
+      Pizza.calculate_most_pizzas_day
     end
   end
 end
