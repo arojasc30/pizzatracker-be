@@ -12,17 +12,17 @@
   ```shell
   createdb pizza-api
 
-2. Run migrations:
+3. Run migrations:
 
    ```shell
    bundle exec sequel -m migrations postgres://localhost/pizza-api
 
-3. Seed database:
+4. Seed database:
 
    ```shell
    ruby seed.rb path/to/csv/file.csv
 
-4. Run server:
+5. Run server:
 
    ```shell
    bundle exec rackup
